@@ -19,6 +19,7 @@ import {
 // --- Components ---
 
 const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [activeTab, setActiveTab] = useState<'qr' | 'bank'>('qr');
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const copyToClipboard = (text: string, field: string) => {
@@ -32,130 +33,205 @@ const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <motion.div 
+        <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center">
+          {/* Backdrop */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
           />
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="bg-white w-full max-w-2xl rounded-[12px] shadow-2xl relative z-10 overflow-hidden"
+
+          {/* Modal — full-height on mobile, auto on desktop */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            className="relative z-10 bg-white w-full md:max-w-lg md:rounded-[12px] rounded-t-[16px] border-2 border-gold shadow-2xl flex flex-col"
+            style={{ maxHeight: '100dvh' }}
           >
             {/* Header */}
-            <div className="p-6 md:p-8 text-center bg-gray-50 border-b border-gray-100 relative">
-              <button 
-                onClick={onClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors p-1"
-              >
-                <X className="w-6 h-6" />
-              </button>
-              <h3 className="text-xl md:text-2xl font-extrabold text-black mb-2">
-                Estás a un paso de transformar tus inmuebles
+            <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
+              <h3 className="text-base font-extrabold text-black leading-tight">
+                Realiza tu pago único de{' '}
+                <span className="text-gold">S/ 47</span>
               </h3>
-              <p className="text-sm text-gray-600 max-w-md mx-auto">
-                Realiza el pago único de <span className="font-bold text-black text-lg">S/ 47</span> a través de cualquiera de estos métodos y envía tu comprobante para recibir acceso inmediato.
-              </p>
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-black transition-colors p-1 ml-2 flex-shrink-0"
+                aria-label="Cerrar"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
-            {/* Methods Grid */}
-            <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8 max-h-[60vh] overflow-y-auto">
-              {/* Yape/Plin */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 font-bold text-sm text-black uppercase tracking-wider mb-2">
-                  <Smartphone className="w-5 h-5 text-gold" />
-                  Yape o Plin
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-200">
-                    <span className="text-[32px] mb-1">📱</span>
-                    <span className="text-[10px] font-bold text-gray-400">QR YAPE</span>
+            {/* Tabs */}
+            <div className="flex border-b border-gray-100 flex-shrink-0">
+              <button
+                onClick={() => setActiveTab('qr')}
+                className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors ${
+                  activeTab === 'qr'
+                    ? 'text-gold border-b-2 border-gold bg-gold/5'
+                    : 'text-gray-400 hover:text-black'
+                }`}
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                Yape / Plin
+              </button>
+              <button
+                onClick={() => setActiveTab('bank')}
+                className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors ${
+                  activeTab === 'bank'
+                    ? 'text-gold border-b-2 border-gold bg-gold/5'
+                    : 'text-gray-400 hover:text-black'
+                }`}
+              >
+                <CreditCard className="w-3.5 h-3.5" />
+                Bancos
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            <div className="flex-1 overflow-y-auto px-4 py-3 min-h-0">
+              {activeTab === 'qr' && (
+                <div className="space-y-3">
+                  <p className="text-[11px] text-gray-500 text-center">
+                    Escanea el QR con tu app de pagos — Titular:{' '}
+                    <span className="font-bold text-black">Nilton Cesar Giron</span>
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {/* Yape QR */}
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-full aspect-square rounded-lg overflow-hidden border-2 border-gold/30 shadow-sm">
+                        <img
+                          src="/qr_yape.jpg"
+                          alt="QR Yape - Nilton Cesar Giron Reyes"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-[11px] font-bold text-black uppercase tracking-wide">Yape</span>
+                    </div>
+                    {/* Plin QR */}
+                    <div className="flex flex-col items-center gap-1.5">
+                      <div className="w-full aspect-square rounded-lg overflow-hidden border-2 border-gold/30 shadow-sm">
+                        <img
+                          src="/qr_plin.jpg"
+                          alt="QR Plin - Nilton Cesar Giron"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-[11px] font-bold text-black uppercase tracking-wide">Plin</span>
+                    </div>
                   </div>
-                  <div className="aspect-square bg-gray-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-200">
-                    <span className="text-[32px] mb-1">💠</span>
-                    <span className="text-[10px] font-bold text-gray-400">QR PLIN</span>
-                  </div>
-                </div>
-                <div className="bg-gold/5 p-4 rounded-lg border border-gold/20">
-                  <p className="text-xs text-gray-500 mb-1">Número de celular:</p>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-bold text-black">960873225</span>
-                    <button 
+                  {/* Phone number */}
+                  <div className="bg-gold/5 border border-gold/20 rounded-lg px-3 py-2 flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wide">Celular</p>
+                      <p className="text-sm font-bold text-black font-mono">960 873 225</p>
+                    </div>
+                    <button
                       onClick={() => copyToClipboard('960873225', 'phone')}
-                      className="text-gold hover:text-gold-dark p-1 flex items-center gap-1 text-[10px] font-bold uppercase transition-colors"
+                      className="text-gold hover:text-gold-dark p-1.5 flex items-center gap-1 text-[10px] font-bold uppercase transition-colors"
                     >
-                      {copiedField === 'phone' ? '¡Copiado!' : <><Copy className="w-3 h-3" /> Copiar</>}
+                      {copiedField === 'phone' ? (
+                        <span className="text-green-600">OK</span>
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
                     </button>
                   </div>
-                  <p className="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-tight">Titular: Nilton Giron</p>
                 </div>
-              </div>
+              )}
 
-              {/* Transferencia */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 font-bold text-sm text-black uppercase tracking-wider mb-2">
-                  <CreditCard className="w-5 h-5 text-gold" />
-                  Transferencia Bancaria
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 bg-[#004C92] rounded flex items-center justify-center text-[10px] text-white font-bold">B</div>
-                      <span className="text-xs font-bold text-black">Cuenta BBVA Soles</span>
+              {activeTab === 'bank' && (
+                <div className="space-y-2">
+                  <p className="text-[11px] text-gray-500 text-center mb-1">
+                    Transferencia a nombre de{' '}
+                    <span className="font-bold text-black">Nilton Cesar Giron Reyes</span>
+                  </p>
+
+                  {/* BBVA */}
+                  <div className="bg-gray-50 border border-gray-100 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-5 h-5 bg-[#004C92] rounded flex items-center justify-center text-[9px] text-white font-bold flex-shrink-0">B</div>
+                      <span className="text-xs font-bold text-black">BBVA Soles</span>
                     </div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-mono font-medium">0011-0814-0237624772</span>
-                      <button 
+                      <span className="text-xs font-mono text-gray-700">0011-0814-0237624772</span>
+                      <button
                         onClick={() => copyToClipboard('0011-0814-0237624772', 'bbva')}
-                        className="text-gold hover:text-gold-dark p-1 flex items-center gap-1 text-[10px] font-bold uppercase"
+                        className="text-gold hover:text-gold-dark flex-shrink-0 p-1 transition-colors"
+                        aria-label="Copiar cuenta BBVA"
                       >
-                        {copiedField === 'bbva' ? 'OK' : <Copy className="w-3 h-3" />}
+                        {copiedField === 'bbva' ? (
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
                       </button>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 bg-[#004C92] rounded flex items-center justify-center text-[10px] text-white font-bold">CCI</div>
+                  {/* CCI */}
+                  <div className="bg-gray-50 border border-gray-100 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-5 h-5 bg-[#004C92] rounded flex items-center justify-center text-[9px] text-white font-bold flex-shrink-0">CCI</div>
                       <span className="text-xs font-bold text-black">CCI (Otros bancos)</span>
                     </div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-mono font-medium">01181400023762477218</span>
-                      <button 
+                      <span className="text-xs font-mono text-gray-700">01181400023762477218</span>
+                      <button
                         onClick={() => copyToClipboard('01181400023762477218', 'cci')}
-                        className="text-gold hover:text-gold-dark p-1 flex items-center gap-1 text-[10px] font-bold uppercase"
+                        className="text-gold hover:text-gold-dark flex-shrink-0 p-1 transition-colors"
+                        aria-label="Copiar CCI"
                       >
-                        {copiedField === 'cci' ? 'OK' : <Copy className="w-3 h-3" />}
+                        {copiedField === 'cci' ? (
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
                       </button>
                     </div>
-                    <div className="mt-2 flex items-center gap-2 opacity-60">
-                      <div className="text-[10px] font-bold px-1.5 py-0.5 bg-orange-100 text-orange-800 rounded">BCP</div>
-                      <div className="text-[10px] font-bold px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded">INTERBANK</div>
+                    <div className="mt-1.5 flex items-center gap-1.5">
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded">BCP</span>
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded">INTERBANK</span>
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 bg-gray-200 text-gray-600 rounded">y más</span>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">Swift: <span className="text-black font-mono">BCONPEPL</span></span>
+                  {/* Swift */}
+                  <div className="bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-gray-400 uppercase font-bold">Swift</span>
+                      <p className="text-xs font-mono font-bold text-black">BCONPEPL</p>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard('BCONPEPL', 'swift')}
+                      className="text-gold hover:text-gold-dark p-1 transition-colors"
+                      aria-label="Copiar Swift"
+                    >
+                      {copiedField === 'swift' ? (
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* WhatsApp CTA */}
-            <div className="p-6 md:p-8 bg-gray-50 border-t border-gray-100">
-              <a 
+            {/* Anchored WhatsApp CTA */}
+            <div className="px-4 pb-4 pt-3 border-t border-gray-100 flex-shrink-0 bg-white">
+              <a
                 href={`https://wa.me/960873225?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white py-4 rounded-[4px] font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-3 active:scale-[0.98]"
+                className="w-full bg-[#25D366] hover:bg-[#128C7E] active:bg-[#128C7E] text-white py-3.5 rounded-[4px] font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 active:scale-[0.98]"
               >
-                <MessageCircle className="w-6 h-6 fill-white" />
-                Ya pagué, enviar comprobante por WhatsApp
+                <MessageCircle className="w-5 h-5 fill-white" />
+                Ya pagué, enviar comprobante
               </a>
             </div>
           </motion.div>
@@ -167,62 +243,76 @@ const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
 
 const BeforeAfterSlider = () => {
   const [sliderPos, setSliderPos] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
+  const updatePosition = (clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const position = ((x - rect.left) / rect.width) * 100;
+    const position = ((clientX - rect.left) / rect.width) * 100;
     setSliderPos(Math.min(Math.max(position, 0), 100));
   };
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    updatePosition(e.clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    updatePosition(e.touches[0].clientX);
+  };
+
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="relative w-full h-[260px] overflow-hidden rounded-[8px] border border-gray-100 bg-[#f9f9f9] cursor-col-resize group shadow-sm"
-      onMouseMove={handleMove}
-      onTouchMove={handleMove}
+      className="relative w-full h-[300px] md:h-[340px] overflow-hidden rounded-[8px] border border-gray-100 bg-[#f9f9f9] select-none shadow-sm"
+      style={{ cursor: 'col-resize' }}
+      onMouseMove={handleMouseMove}
+      onMouseDown={() => setIsDragging(true)}
+      onMouseUp={() => setIsDragging(false)}
+      onMouseLeave={() => setIsDragging(false)}
+      onTouchMove={handleTouchMove}
     >
-      {/* Before Image (Empty) */}
+      {/* Before Image — empty apartment */}
       <div className="absolute inset-0">
-        <img 
-          src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2069&auto=format&fit=crop" 
-          alt="Antes"
+        <img
+          src="/amoblamiento_antes.jpg"
+          alt="Antes: departamento vacío"
           className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
         />
-        <div className="absolute bottom-2 left-2 bg-black/50 text-white px-2 py-0.5 rounded-[2px] text-[10px] font-bold uppercase tracking-wider">
-          Antes (Vacío)
+        <div className="absolute bottom-2 left-2 bg-black/60 text-white px-2 py-0.5 rounded-[2px] text-[10px] font-bold uppercase tracking-wider">
+          Antes
         </div>
       </div>
 
-      {/* After Image (Furnished) */}
-      <div 
+      {/* After Image — furnished */}
+      <div
         className="absolute inset-0 overflow-hidden"
         style={{ width: `${sliderPos}%` }}
       >
-        <img 
-          src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop" 
-          alt="Después"
-          className="w-full h-full object-cover max-w-none"
-          style={{ width: containerRef.current?.offsetWidth }}
-          referrerPolicy="no-referrer"
+        <img
+          src="/amoblamiento_despues.jpg"
+          alt="Después: amoblado con IA"
+          className="absolute inset-0 h-full object-cover"
+          style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}
         />
-        <div className="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-0.5 rounded-[2px] text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+        <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-0.5 rounded-[2px] text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
           Después (IA)
         </div>
       </div>
 
-      {/* Divider */}
-      <div 
-        className="absolute top-0 bottom-0 w-0.5 bg-gold shadow-[0_0_10px_rgba(207,174,99,0.5)] z-10"
-        style={{ left: `${sliderPos}%` }}
+      {/* Divider line */}
+      <div
+        className="absolute top-0 bottom-0 w-1 bg-gold shadow-[0_0_12px_rgba(207,174,99,0.6)] z-10 pointer-events-none"
+        style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-md border-2 border-gold group-active:scale-110 transition-transform">
-          <div className="flex gap-0.5">
-            <div className="w-0.5 h-2 bg-gold" />
-            <div className="w-0.5 h-2 bg-gold" />
+        {/* Handle */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full flex items-center justify-center shadow-lg border-[3px] border-gold">
+          <div className="flex items-center gap-1">
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+              <path d="M2 1L0 7L2 13" stroke="#CFAE63" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6 1L8 7L6 13" stroke="#CFAE63" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
         </div>
       </div>
