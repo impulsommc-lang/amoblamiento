@@ -1,4 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+
+// Declare fbq as a global to avoid TypeScript errors when firing pixel events
+declare global {
+  interface Window {
+    fbq: (...args: unknown[]) => void;
+  }
+}
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Zap, 
@@ -228,6 +235,11 @@ const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
                 href={`https://wa.me/960873225?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window.fbq === 'function') {
+                    window.fbq('track', 'Purchase', { currency: 'PEN', value: 47.00 });
+                  }
+                }}
                 className="w-full bg-[#25D366] hover:bg-[#128C7E] active:bg-[#128C7E] text-white py-3.5 rounded-[4px] font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 active:scale-[0.98]"
               >
                 <MessageCircle className="w-5 h-5 fill-white" />
@@ -357,6 +369,9 @@ export default function App() {
   const handleOpenModal = () => {
     setIsPaymentModalOpen(true);
     localStorage.setItem('payment_modal_open', 'true');
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'InitiateCheckout');
+    }
   };
 
   const handleCloseModal = () => {
