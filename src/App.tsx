@@ -37,7 +37,7 @@ const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const whatsappMessage = encodeURIComponent("Hola, acabo de realizar el pago de S/ 47 para el curso de Amoblamiento con IA. Aquí te adjunto mi comprobante para el acceso.");
+  const whatsappMessage = encodeURIComponent("Hola, acabo de realizar el pago de S/ 97 para el curso de Amoblamiento con IA. Aquí te adjunto mi comprobante para el acceso.");
 
   return (
     <AnimatePresence>
@@ -64,7 +64,7 @@ const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
             <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
               <h3 className="text-base font-extrabold text-black leading-tight">
                 Realiza tu pago único de{' '}
-                <span className="text-gold">S/ 47</span>
+                <span className="text-gold">S/ 97</span>
               </h3>
               <button
                 onClick={onClose}
@@ -239,7 +239,7 @@ const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
                 rel="noopener noreferrer"
                 onClick={() => {
                   if (typeof window.fbq === 'function') {
-                    window.fbq('track', 'Purchase', { currency: 'PEN', value: 47.00 });
+                    window.fbq('track', 'Purchase', { currency: 'PEN', value: 97.00 });
                   }
                 }}
                 className="w-full bg-[#25D366] hover:bg-[#128C7E] active:bg-[#128C7E] text-white py-3.5 rounded-[4px] font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 active:scale-[0.98]"
@@ -350,7 +350,7 @@ const Navbar = ({ onCtaClick }: { onCtaClick: () => void }) => (
         onClick={onCtaClick}
         className="bg-ink hover:bg-gray-800 text-white px-4 md:px-5 py-2 rounded-sm font-bold text-[11px] md:text-xs transition-all uppercase tracking-wide active:scale-95"
       >
-        Inscribirme — S/ 47
+        Inscribirme — S/ 97
       </button>
     </div>
   </nav>
@@ -403,7 +403,7 @@ export default function App() {
       <section className="pt-20 md:pt-24 pb-0 px-6 md:px-10 bg-surface">
         <div className="max-w-6xl mx-auto">
           <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[11px] font-bold uppercase tracking-[3px] text-gold mb-4 md:mb-5">
-            Curso Online — Pago único S/ 47
+            Curso Online — Pago único S/ 97
           </motion.p>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="font-serif text-center text-[36px] md:text-[60px] lg:text-[72px] font-black leading-[1.05] tracking-tight text-ink text-balance mx-auto max-w-4xl mb-5 md:mb-6">
             Crea Videos de{' '}<span className="text-gold">Diseño de Interiores</span>{' '}con IA en 10 Minutos
@@ -413,7 +413,7 @@ export default function App() {
           </motion.p>
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.24 }} className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 md:mb-14">
             <button onClick={handleOpenModal} className="w-full sm:w-auto bg-gold hover:bg-gold-dark text-white px-8 py-4 rounded-sm font-bold text-sm md:text-base transition-all shadow-lg shadow-gold/30 active:scale-[0.98] uppercase tracking-wide">
-              Quiero el curso por S/ 47
+              Quiero el curso por S/ 97
             </button>
             <a href="#como-funciona" className="w-full sm:w-auto border border-[#E5E1D8] hover:border-ink text-ink px-8 py-4 rounded-sm font-bold text-sm md:text-base transition-all text-center uppercase tracking-wide flex items-center justify-center gap-2">
               Ver cómo funciona <ArrowRight className="w-4 h-4" />
@@ -430,7 +430,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-white/10">
           {[
             { value: '10 min', label: 'por propiedad amoblada' },
-            { value: 'S/ 47', label: 'pago único, acceso de por vida' },
+            { value: 'S/ 97', label: 'pago único, acceso de por vida' },
             { value: '50+', label: 'prompts maestros incluidos' },
             { value: '6', label: 'módulos en video paso a paso' },
           ].map(({ value, label }) => (
@@ -580,10 +580,10 @@ export default function App() {
               </div>
             ))}
           </div>
-          <p className="font-serif text-6xl md:text-7xl font-black text-gold leading-none mb-1">S/ 47</p>
+          <p className="font-serif text-6xl md:text-7xl font-black text-gold leading-none mb-1">S/ 97</p>
           <p className="text-white/50 text-xs uppercase tracking-[2px] mb-8">Pago único — Acceso de por vida</p>
           <button onClick={handleOpenModal} className="w-full bg-gold hover:bg-gold-dark text-white py-4 md:py-5 rounded-sm font-black text-base md:text-lg transition-all shadow-xl shadow-gold/20 active:scale-[0.98] uppercase tracking-wide mb-3">
-            Quiero todo esto por S/ 47
+            Quiero todo esto por S/ 97
           </button>
           <p className="text-white/30 text-[11px]">Acceso inmediato tras confirmar tu pago por WhatsApp.</p>
         </div>
