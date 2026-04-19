@@ -20,7 +20,11 @@ import {
   Copy,
   Smartphone,
   CreditCard,
-  MessageCircle
+  MessageCircle,
+  BookOpen,
+  Bot,
+  Camera,
+  Video
 } from 'lucide-react';
 
 // --- Components ---
@@ -514,6 +518,148 @@ export default function App() {
           </div>
         </article>
       </div>
+
+      {/* BONOS SECTION */}
+      <section className="py-10 md:py-14 px-6 md:px-10 bg-[#FAFAFA] border-t border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-[11px] font-bold uppercase tracking-[2px] text-gold text-center mb-1">
+            Solo por hoy
+          </p>
+          <h2 className="text-2xl md:text-[32px] font-extrabold text-black text-center tracking-tight mb-1 text-balance">
+            4 Bonos Exclusivos Incluidos
+          </h2>
+          <p className="text-sm text-[#555555] text-center mb-8 md:mb-10">
+            Valorados en S/ 344 — tuyos sin costo adicional.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            {/* Bono 1 */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-4 items-start">
+              <div className="w-10 h-10 flex-shrink-0 rounded-[8px] bg-gold/10 flex items-center justify-center">
+                <BookOpen className="w-5 h-5 text-gold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                  <h3 className="text-sm font-extrabold text-black">Kit de 50 Prompts Maestros</h3>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className="text-[11px] text-gray-400 line-through">S/ 97</span>
+                    <span className="text-[11px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">GRATIS</span>
+                  </div>
+                </div>
+                <p className="text-xs text-[#555555] leading-relaxed">
+                  Comandos listos para copiar y pegar. Genera estilos Minimalistas, Industriales, Nórdicos y Premium en segundos.
+                </p>
+              </div>
+            </div>
+
+            {/* Bono 2 */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-4 items-start">
+              <div className="w-10 h-10 flex-shrink-0 rounded-[8px] bg-gold/10 flex items-center justify-center">
+                <Bot className="w-5 h-5 text-gold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                  <h3 className="text-sm font-extrabold text-black">Agente IA &apos;Interiorista Pro&apos;</h3>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className="text-[11px] text-gray-400 line-through">S/ 120</span>
+                    <span className="text-[11px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">GRATIS</span>
+                  </div>
+                </div>
+                <p className="text-xs text-[#555555] leading-relaxed">
+                  Instrucciones secretas para convertir a ChatGPT en tu propio diseñador de interiores personal que redacta tus prompts por ti.
+                </p>
+              </div>
+            </div>
+
+            {/* Bono 3 */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-4 items-start">
+              <div className="w-10 h-10 flex-shrink-0 rounded-[8px] bg-gold/10 flex items-center justify-center">
+                <Camera className="w-5 h-5 text-gold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                  <h3 className="text-sm font-extrabold text-black">Checklist &apos;La Foto Perfecta&apos;</h3>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className="text-[11px] text-gray-400 line-through">S/ 47</span>
+                    <span className="text-[11px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">GRATIS</span>
+                  </div>
+                </div>
+                <p className="text-xs text-[#555555] leading-relaxed">
+                  Aprende el ángulo y la luz exacta que necesita la IA para que tus renders parezcan fotos reales tomadas por un profesional.
+                </p>
+              </div>
+            </div>
+
+            {/* Bono 4 */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-4 items-start">
+              <div className="w-10 h-10 flex-shrink-0 rounded-[8px] bg-gold/10 flex items-center justify-center">
+                <Video className="w-5 h-5 text-gold" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                  <h3 className="text-sm font-extrabold text-black">Masterclass de Cierre Visual</h3>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className="text-[11px] text-gray-400 line-through">S/ 80</span>
+                    <span className="text-[11px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">GRATIS</span>
+                  </div>
+                </div>
+                <p className="text-xs text-[#555555] leading-relaxed">
+                  Cómo usar estas imágenes estratégicamente en WhatsApp para eliminar las dudas de tus prospectos y cerrar la venta.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VALUE STACK + FINAL CTA */}
+      <section className="py-10 md:py-14 px-6 md:px-10 bg-white border-t border-gray-100">
+        <div className="max-w-lg mx-auto">
+          {/* Value stack box */}
+          <div className="bg-black rounded-xl p-6 md:p-8 text-center mb-5 shadow-xl">
+            <p className="text-gold text-xs font-bold uppercase tracking-[2px] mb-3">
+              Curso Amoblamiento con IA + 4 Bonos Exclusivos
+            </p>
+            <div className="flex flex-col items-center gap-1 mb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-gray-500 text-sm line-through">Valor Total: S/ 597</span>
+              </div>
+              <p className="text-gold text-4xl md:text-5xl font-black tracking-tighter leading-none">
+                S/ 47
+              </p>
+              <p className="text-white/60 text-xs font-medium mt-1 uppercase tracking-wide">
+                Precio de oferta hoy — pago único
+              </p>
+            </div>
+
+            <div className="border-t border-white/10 pt-4 space-y-1.5 text-left mb-5">
+              {[
+                'Curso principal: Amoblamiento con IA',
+                'Kit de 50 Prompts Maestros',
+                "Agente IA 'Interiorista Pro'",
+                "Checklist 'La Foto Perfecta'",
+                'Masterclass de Cierre Visual',
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-gold flex-shrink-0" />
+                  <span className="text-white/80 text-xs">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={handleOpenModal}
+              className="w-full bg-gold hover:bg-gold-dark active:scale-[0.98] text-white py-4 rounded-[4px] font-extrabold text-base transition-all shadow-lg shadow-gold/30"
+            >
+              Quiero todo esto por S/ 47
+            </button>
+          </div>
+
+          <p className="text-center text-[11px] text-gray-400">
+            Acceso inmediato tras confirmar tu pago por WhatsApp.
+          </p>
+        </div>
+      </section>
 
       {/* FOOTER */}
       <footer className="bg-black py-4 px-10 text-center border-t border-white/10">
