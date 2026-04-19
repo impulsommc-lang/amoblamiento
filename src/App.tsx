@@ -9,8 +9,6 @@ declare global {
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Zap, 
-  User, 
-  Settings, 
   CheckCircle2, 
   ArrowRight,
   TrendingUp,
@@ -20,7 +18,11 @@ import {
   Copy,
   Smartphone,
   CreditCard,
-  MessageCircle
+  MessageCircle,
+  BookOpen,
+  Bot,
+  Camera,
+  Video
 } from 'lucide-react';
 
 // --- Components ---
@@ -334,27 +336,24 @@ const BeforeAfterSlider = () => {
 
 
 const Navbar = ({ onCtaClick }: { onCtaClick: () => void }) => (
-  <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 h-14 md:h-16">
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F7F5F0]/95 backdrop-blur-md border-b border-[#E5E1D8] h-14 md:h-16">
     <div className="max-w-6xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <div className="w-5 h-5 md:w-6 md:h-6 bg-black rounded flex items-center justify-center">
-          <span className="text-gold font-bold text-[10px] md:text-sm">IA</span>
+      <div className="flex items-center gap-2.5">
+        <div className="w-7 h-7 bg-ink rounded-sm flex items-center justify-center">
+          <span className="text-gold font-black text-[11px] tracking-tighter">IA</span>
         </div>
-        <span className="font-bold text-sm md:text-lg tracking-tighter">AMUEBLA</span>
+        <span className="font-black text-sm md:text-base tracking-tight text-ink uppercase">
+          Video IA Interior
+        </span>
       </div>
-      <button 
+      <button
         onClick={onCtaClick}
-        className="bg-gold hover:bg-gold-dark text-white px-3 md:px-4 py-1.5 md:py-2 rounded-[4px] font-bold text-[10px] md:text-xs transition-all shadow-md shadow-gold/20 active:scale-95"
+        className="bg-ink hover:bg-gray-800 text-white px-4 md:px-5 py-2 rounded-sm font-bold text-[11px] md:text-xs transition-all uppercase tracking-wide active:scale-95"
       >
-        ¡COMPRAR!
+        Inscribirme — S/ 47
       </button>
     </div>
   </nav>
-);
-const SectionHeading = ({ children, light = false, className = "" }: { children: React.ReactNode, light?: boolean, className?: string }) => (
-  <h2 className={`text-2xl md:text-[32px] font-bold tracking-tight mb-4 ${light ? 'text-white' : 'text-black'} ${className}`}>
-    {children}
-  </h2>
 );
 
 export default function App() {
@@ -379,150 +378,227 @@ export default function App() {
     localStorage.setItem('payment_modal_open', 'false');
   };
 
+  const steps = [
+    { num: '01', title: 'Toma la foto del espacio', desc: 'Saca una foto con tu celular al departamento vacío. No necesitas cámara profesional ni iluminación especial.', icon: <Camera className="w-5 h-5" /> },
+    { num: '02', title: 'Aplica el prompt maestro', desc: 'Copia y pega uno de los 50 prompts incluidos. Elige el estilo: nórdico, industrial, minimalista o premium.', icon: <Bot className="w-5 h-5" /> },
+    { num: '03', title: 'Obtén el render en segundos', desc: 'La IA genera una imagen hiperrealista del espacio amoblado. Descárgala y úsala de inmediato.', icon: <Zap className="w-5 h-5" /> },
+    { num: '04', title: 'Cierra ventas más rápido', desc: 'Comparte el antes/después por WhatsApp. Tus prospectos visualizan el potencial y deciden más rápido.', icon: <TrendingUp className="w-5 h-5" /> },
+  ];
+
+  const curriculum = [
+    { label: 'Módulo 1', title: 'Fundamentos de la IA visual', desc: 'Qué herramientas usar, cómo funcionan y por qué son el futuro del marketing inmobiliario.' },
+    { label: 'Módulo 2', title: 'La foto perfecta para la IA', desc: 'Técnica de ángulo, luz y encuadre que multiplica la calidad del resultado generado.' },
+    { label: 'Módulo 3', title: 'Prompts que venden', desc: 'El sistema de 3 capas para describir cualquier espacio y obtener resultados hiperrealistas.' },
+    { label: 'Módulo 4', title: 'Estilos decorativos con IA', desc: 'Cómo cambiar de estilo nórdico a industrial a premium con una sola línea de texto.' },
+    { label: 'Módulo 5', title: 'Videos con IA para redes', desc: 'Convierte tus imágenes en videos de recorrido virtual para Instagram y TikTok en minutos.' },
+    { label: 'Módulo 6', title: 'Cierre visual por WhatsApp', desc: 'Estrategia probada para usar el antes/después y eliminar objeciones de precio al instante.' },
+  ];
+
   return (
-    <div className="min-h-screen bg-white selection:bg-gold selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-surface selection:bg-gold selection:text-white overflow-x-hidden">
       <Navbar onCtaClick={handleOpenModal} />
-      <PaymentModal 
-        isOpen={isPaymentModalOpen} 
-        onClose={handleCloseModal} 
-      />
+      <PaymentModal isOpen={isPaymentModalOpen} onClose={handleCloseModal} />
 
-      {/* HERO SECTION */}
-      <section className="pt-20 md:pt-28 pb-6 md:pb-10 px-6 md:px-10 max-w-6xl mx-auto min-h-[90vh] md:min-h-0 flex flex-col justify-center">
-        <div className="grid md:grid-cols-[1.2fr_0.8fr] gap-6 md:gap-10 items-center">
-          <div className="text-center md:text-left">
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-[#333333] font-semibold mb-2 md:mb-3 uppercase tracking-[1px] text-[11px] md:text-[13px]"
-            >
-              🚀 Exclusivo para agentes inmobiliarios
-            </motion.p>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl md:text-[42px] font-extrabold leading-[1.1] mb-3 md:mb-4 tracking-[-1px]"
-            >
-              Transforma Inmuebles Vacíos en Propiedades de Lujo con IA
-            </motion.h1>
-
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-base md:text-lg text-[#333333] mb-5 md:mb-6 leading-relaxed max-w-lg mx-auto md:mx-0"
-            >
-              Aprende a crear amoblamientos virtuales hiperrealistas en 10 minutos sin conocimientos previos de diseño.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <button 
-                onClick={handleOpenModal}
-                className="w-full md:w-auto inline-block bg-gold hover:bg-gold-dark text-white px-8 md:px-9 py-4 rounded-[4px] font-bold text-sm md:text-base transition-all shadow-lg shadow-gold/30 active:scale-95"
-              >
-                ¡Quiero aprender ahora por S/ 47!
-              </button>
-            </motion.div>
-          </div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="w-full"
-          >
+      {/* ── HERO ─────────────────────────────────────────────── */}
+      <section className="pt-20 md:pt-24 pb-0 px-6 md:px-10 bg-surface">
+        <div className="max-w-6xl mx-auto">
+          <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[11px] font-bold uppercase tracking-[3px] text-gold mb-4 md:mb-5">
+            Curso Online — Pago único S/ 47
+          </motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="font-serif text-center text-[36px] md:text-[60px] lg:text-[72px] font-black leading-[1.05] tracking-tight text-ink text-balance mx-auto max-w-4xl mb-5 md:mb-6">
+            Crea Videos de{' '}<span className="text-gold">Diseño de Interiores</span>{' '}con IA en 10 Minutos
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="text-center text-base md:text-lg text-gray-mid leading-relaxed max-w-xl mx-auto mb-7 md:mb-9">
+            Transforma departamentos vacíos en propiedades amobladas y produce videos virales de recorrido virtual — sin experiencia, sin software caro, sin diseñador.
+          </motion.p>
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.24 }} className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 md:mb-14">
+            <button onClick={handleOpenModal} className="w-full sm:w-auto bg-gold hover:bg-gold-dark text-white px-8 py-4 rounded-sm font-bold text-sm md:text-base transition-all shadow-lg shadow-gold/30 active:scale-[0.98] uppercase tracking-wide">
+              Quiero el curso por S/ 47
+            </button>
+            <a href="#como-funciona" className="w-full sm:w-auto border border-[#E5E1D8] hover:border-ink text-ink px-8 py-4 rounded-sm font-bold text-sm md:text-base transition-all text-center uppercase tracking-wide flex items-center justify-center gap-2">
+              Ver cómo funciona <ArrowRight className="w-4 h-4" />
+            </a>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.36, duration: 0.7 }} className="rounded-t-xl overflow-hidden border border-b-0 border-[#E5E1D8] shadow-xl">
             <BeforeAfterSlider />
           </motion.div>
         </div>
       </section>
 
-      {/* PROBLEM SECTION */}
-      <section className="bg-black py-8 md:py-10 px-6 md:px-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <SectionHeading light className="text-xl md:text-2xl mb-1 md:mb-2">
-            Mostrar un departamento vacío te está haciendo perder dinero.
-          </SectionHeading>
-          <p className="text-sm md:text-[15px] text-white/80 leading-relaxed">
-            Un espacio vacío se ve más pequeño y frío. Contratar un diseñador 3D toma semanas y cuesta más de S/ 1,500. El resultado: propiedades estancadas.
+      {/* ── STATS BAR ─────────────────────────────────────────── */}
+      <div className="bg-ink text-white">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 md:divide-x divide-white/10">
+          {[
+            { value: '10 min', label: 'por propiedad amoblada' },
+            { value: 'S/ 47', label: 'pago único, acceso de por vida' },
+            { value: '50+', label: 'prompts maestros incluidos' },
+            { value: '6', label: 'módulos en video paso a paso' },
+          ].map(({ value, label }) => (
+            <div key={label} className="text-center md:px-8">
+              <p className="font-serif text-2xl md:text-3xl font-black text-gold mb-1">{value}</p>
+              <p className="text-[11px] text-white/60 uppercase tracking-wide font-medium">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── PROBLEM ───────────────────────────────────────────── */}
+      <section className="py-14 md:py-20 px-6 md:px-10 bg-surface border-b border-[#E5E1D8]">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[3px] text-gold-dark mb-3">El problema</p>
+          <h2 className="font-serif text-2xl md:text-4xl font-black text-ink leading-tight mb-4 text-balance">
+            Mostrar un departamento vacío te está costando ventas.
+          </h2>
+          <p className="text-gray-mid text-base md:text-lg leading-relaxed mb-8">
+            Un espacio vacío luce más pequeño, más frío y menos deseable. Contratar un diseñador 3D toma semanas y cuesta más de S/ 1,500. El resultado: propiedades estancadas y clientes que no se deciden.
           </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+            {[
+              { icon: <Clock className="w-4 h-4 text-gold" />, title: 'Semanas de espera', desc: 'Un render profesional tarda 2-4 semanas en estar listo.' },
+              { icon: <TrendingUp className="w-4 h-4 text-gold" />, title: 'Costos prohibitivos', desc: 'S/ 1,500+ por propiedad hace inviable amoblar todo tu portafolio.' },
+              { icon: <Layout className="w-4 h-4 text-gold" />, title: 'Anuncios que no convierten', desc: 'Fotos vacías generan menos interés y menos consultas.' },
+            ].map(({ icon, title, desc }) => (
+              <div key={title} className="bg-white border border-[#E5E1D8] rounded-xl p-5">
+                <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center mb-3">{icon}</div>
+                <h4 className="font-bold text-ink text-sm mb-1">{title}</h4>
+                <p className="text-gray-mid text-xs leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* FEATURES & PRICING CONTAINER */}
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 py-8 md:py-12 px-6 md:px-10 items-stretch">
-        {/* FEATURES */}
-        <section>
-          <h3 className="text-base md:text-lg font-bold mb-5 md:mb-6 text-black">El Método Definitivo con IA</h3>
-          <div className="space-y-4 md:space-y-6">
-            <div className="flex items-start gap-3 md:gap-4 group">
-              <div className="w-10 h-10 md:w-11 md:h-11 bg-gray-50 border border-gray-100 rounded-[8px] flex items-center justify-center flex-shrink-0 text-gold group-hover:bg-gold/5 transition-colors">
-                <Zap className="w-5 h-5" />
+      {/* ── HOW IT WORKS ──────────────────────────────────────── */}
+      <section id="como-funciona" className="py-14 md:py-20 px-6 md:px-10 bg-white border-b border-[#E5E1D8]">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[11px] font-bold uppercase tracking-[3px] text-gold text-center mb-3">El método</p>
+          <h2 className="font-serif text-2xl md:text-4xl font-black text-ink text-center mb-10 md:mb-14 text-balance">
+            De foto vacía a video amoblado en 4 pasos
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            {steps.map(({ num, title, desc, icon }) => (
+              <div key={num} className="flex gap-5 items-start bg-surface border border-[#E5E1D8] rounded-xl p-5 md:p-6">
+                <div className="w-11 h-11 rounded-xl bg-ink flex-shrink-0 flex items-center justify-center text-gold">{icon}</div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[2px] text-gold-dark mb-1">{num}</p>
+                  <h3 className="font-bold text-ink text-base mb-1.5">{title}</h3>
+                  <p className="text-gray-mid text-sm leading-relaxed">{desc}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-sm md:text-base font-bold text-black mb-0.5 md:mb-1">Velocidad extrema</h4>
-                <p className="text-xs md:text-sm text-[#333333] leading-relaxed">
-                  Amobla cualquier propiedad en menos de 10 minutos con resultados profesionales.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 md:gap-4 group">
-              <div className="w-10 h-10 md:w-11 md:h-11 bg-gray-50 border border-gray-100 rounded-[8px] flex items-center justify-center flex-shrink-0 text-gold group-hover:bg-gold/5 transition-colors">
-                <User className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-sm md:text-base font-bold text-black mb-0.5 md:mb-1">Cero experiencia</h4>
-                <p className="text-xs md:text-sm text-[#333333] leading-relaxed">
-                  No necesitas saber diseñar. Solo copia y pega los prompts que te entregamos.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 md:gap-4 group">
-              <div className="w-10 h-10 md:w-11 md:h-11 bg-gray-50 border border-gray-100 rounded-[8px] flex items-center justify-center flex-shrink-0 text-gold group-hover:bg-gold/5 transition-colors">
-                <Settings className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-sm md:text-base font-bold text-black mb-0.5 md:mb-1">Control total</h4>
-                <p className="text-xs md:text-sm text-[#333333] leading-relaxed">
-                  Cambia el estilo de decoración de nórdico a industrial en solo segundos.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* PRICING SECTION */}
-        <article id="oferta" className="h-full">
-          <div className="h-full bg-white rounded-xl p-6 md:p-8 border-2 border-gold flex flex-col justify-center text-center shadow-sm">
-            <p className="text-base md:text-[18px] font-bold text-gold mb-3 md:mb-4">Oferta de Lanzamiento</p>
-            <p className="text-[#999999] text-sm md:text-base line-through mb-0.5">Precio regular: S/ 1,500</p>
-            <p className="text-4xl md:text-5xl font-black text-black mb-1 md:mb-2 tracking-tighter">S/ 47</p>
-            <p className="text-[12px] md:text-[14px] text-[#333333] mb-5 md:mb-6 font-medium tracking-tight">Único pago. Acceso inmediato de por vida.</p>
-            <button 
-              onClick={handleOpenModal}
-              className="w-full bg-gold hover:bg-gold-dark text-white py-3.5 md:py-4 rounded-[4px] font-bold text-sm md:text-base transition-all shadow-md shadow-gold/20 active:scale-[0.98]"
-            >
-              Sí, quiero el curso por S/ 47
+      {/* ── CURRICULUM ────────────────────────────────────────── */}
+      <section className="py-14 md:py-20 px-6 md:px-10 bg-surface border-b border-[#E5E1D8]">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-start">
+          <div className="md:sticky md:top-24">
+            <p className="text-[11px] font-bold uppercase tracking-[3px] text-gold mb-3">Contenido del curso</p>
+            <h2 className="font-serif text-2xl md:text-4xl font-black text-ink leading-tight mb-4 text-balance">
+              6 módulos en video, paso a paso
+            </h2>
+            <p className="text-gray-mid text-sm md:text-base leading-relaxed mb-6">
+              Cada módulo está diseñado para aplicarlo de inmediato. Terminas el curso con imágenes y videos listos para publicar.
+            </p>
+            <button onClick={handleOpenModal} className="bg-gold hover:bg-gold-dark text-white px-6 py-3.5 rounded-sm font-bold text-sm transition-all shadow-md shadow-gold/20 active:scale-[0.98] uppercase tracking-wide flex items-center gap-2">
+              Acceder al curso <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-        </article>
-      </div>
+          <div className="space-y-3">
+            {curriculum.map(({ label, title, desc }, i) => (
+              <div key={i} className="bg-white border border-[#E5E1D8] rounded-xl p-4 flex gap-4 items-start hover:border-gold/50 transition-colors">
+                <div className="w-9 h-9 rounded-lg bg-ink flex-shrink-0 flex items-center justify-center">
+                  <Video className="w-4 h-4 text-gold" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-black text-gold-dark uppercase tracking-[1.5px] mb-0.5">{label}</p>
+                  <h4 className="font-bold text-ink text-sm mb-0.5">{title}</h4>
+                  <p className="text-gray-mid text-xs leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* FOOTER */}
-      <footer className="bg-black py-4 px-10 text-center border-t border-white/10">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[#999999] text-[12px]">
-            &copy; {new Date().getFullYear()} Virtual IA Real Estate. Todos los derechos reservados.
-          </p>
-          
-          <div className="flex gap-6 text-[#999999] text-[12px] font-medium">
+      {/* ── BONOS ─────────────────────────────────────────────── */}
+      <section className="py-14 md:py-20 px-6 md:px-10 bg-white border-b border-[#E5E1D8]">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[11px] font-bold uppercase tracking-[3px] text-gold text-center mb-3">Solo por hoy</p>
+          <h2 className="font-serif text-2xl md:text-4xl font-black text-ink text-center mb-2 text-balance">
+            4 Bonos Exclusivos Incluidos
+          </h2>
+          <p className="text-gray-mid text-sm md:text-base text-center mb-10">Valorados en S/ 344 — tuyos sin costo adicional.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            {[
+              { icon: <BookOpen className="w-5 h-5 text-gold" />, title: 'Kit de 50 Prompts Maestros', price: 'S/ 97', desc: 'Comandos listos para copiar y pegar. Genera estilos Minimalistas, Industriales, Nórdicos y Premium en segundos.' },
+              { icon: <Bot className="w-5 h-5 text-gold" />, title: "Agente IA 'Interiorista Pro'", price: 'S/ 120', desc: 'Instrucciones secretas para convertir a ChatGPT en tu propio diseñador de interiores que redacta prompts por ti.' },
+              { icon: <Camera className="w-5 h-5 text-gold" />, title: "Checklist 'La Foto Perfecta'", price: 'S/ 47', desc: 'El ángulo y la luz exacta que necesita la IA para que tus renders parezcan fotos reales de profesional.' },
+              { icon: <Video className="w-5 h-5 text-gold" />, title: 'Masterclass de Cierre Visual', price: 'S/ 80', desc: 'Cómo usar el antes/después en WhatsApp para eliminar objeciones y cerrar la venta al instante.' },
+            ].map(({ icon, title, price, desc }) => (
+              <div key={title} className="bg-surface border border-[#E5E1D8] rounded-xl p-5 flex gap-4 items-start hover:border-gold/40 transition-colors">
+                <div className="w-10 h-10 flex-shrink-0 rounded-xl bg-white border border-[#E5E1D8] flex items-center justify-center shadow-sm">{icon}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                    <h3 className="text-sm font-extrabold text-ink">{title}</h3>
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <span className="text-[11px] text-gray-light line-through">{price}</span>
+                      <span className="text-[10px] font-black text-white bg-green-600 px-1.5 py-0.5 rounded-sm uppercase tracking-wide">GRATIS</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-mid leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── VALUE STACK + FINAL CTA ───────────────────────────── */}
+      <section className="py-14 md:py-20 px-6 md:px-10 bg-ink">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[3px] text-gold mb-4">Todo incluido</p>
+          <h2 className="font-serif text-3xl md:text-5xl font-black text-white mb-2 text-balance leading-tight">
+            Curso + 4 Bonos por un único pago
+          </h2>
+          <p className="text-white/50 text-sm mb-8 line-through">Valor total: S/ 597</p>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 mb-8 text-left space-y-3">
+            {[
+              { label: 'Curso principal en video (6 módulos)', badge: 'Incluido' },
+              { label: 'Kit de 50 Prompts Maestros', badge: '+ Bono' },
+              { label: "Agente IA 'Interiorista Pro'", badge: '+ Bono' },
+              { label: "Checklist 'La Foto Perfecta'", badge: '+ Bono' },
+              { label: 'Masterclass de Cierre Visual', badge: '+ Bono' },
+            ].map(({ label, badge }) => (
+              <div key={label} className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-gold flex-shrink-0" />
+                  <span className="text-white/80 text-sm">{label}</span>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wide text-gold border border-gold/30 px-2 py-0.5 rounded-sm flex-shrink-0">{badge}</span>
+              </div>
+            ))}
+          </div>
+          <p className="font-serif text-6xl md:text-7xl font-black text-gold leading-none mb-1">S/ 47</p>
+          <p className="text-white/50 text-xs uppercase tracking-[2px] mb-8">Pago único — Acceso de por vida</p>
+          <button onClick={handleOpenModal} className="w-full bg-gold hover:bg-gold-dark text-white py-4 md:py-5 rounded-sm font-black text-base md:text-lg transition-all shadow-xl shadow-gold/20 active:scale-[0.98] uppercase tracking-wide mb-3">
+            Quiero todo esto por S/ 47
+          </button>
+          <p className="text-white/30 text-[11px]">Acceso inmediato tras confirmar tu pago por WhatsApp.</p>
+        </div>
+      </section>
+
+      {/* ── FOOTER ────────────────────────────────────────────── */}
+      <footer className="bg-black py-5 px-6 md:px-10 border-t border-white/5">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 bg-white/10 rounded-sm flex items-center justify-center">
+              <span className="text-gold font-black text-[10px]">IA</span>
+            </div>
+            <p className="text-white/40 text-[12px]">&copy; {new Date().getFullYear()} Video IA Interior. Todos los derechos reservados.</p>
+          </div>
+          <div className="flex gap-5 text-white/40 text-[12px] font-medium">
             <a href="#" className="hover:text-gold transition-colors">Términos y Condiciones</a>
             <a href="#" className="hover:text-gold transition-colors">Privacidad</a>
           </div>
@@ -531,3 +607,5 @@ export default function App() {
     </div>
   );
 }
+
+
